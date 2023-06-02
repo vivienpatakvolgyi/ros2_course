@@ -1,0 +1,29 @@
+# Kötelező program
+
+A program egy olyan algoritmust valósít meg, ami megakadályozza, hogy a turtlebot akadályba ütközzön
+
+## Inicializáció és konfiguráció
+1. ROS2 node létrehozása ('''TurtlebotController''')
+2. Megállási távolság beállítása ('''stop_distance''')
+3. Kiadó létrehozása a Twist üzenetek küldéséhez ('''cmd_pub''')
+
+## Adatok feldolgozása
+
+1. A '''LaserScan''' üzenetek regisztrációja a '''/scan''' topicon a laser_callback függvénnyel
+2. A '''laser_callback'''ben szereplő adatok ellenőrzése az alábbiak szerint
+2.1. Ha az akadály távolsága kisebb vagy egyenlő a megállási távolsággal, akkor a '''stop_robot''' függvény aktiválódik és megállítja a robotot
+2.2. Ha nincs akadály, akkor a '''move_forward''' függvény mozgatja előre a robotot
+
+## Akciók végrehajtása
+1. A stop_rovot függvény lefut, megállítva a robotot (beállítva a szögsebességet 0-ra)
+2. A move_forward függvény, beállítja a lineáris sebességes és a szögsebességet és előre mozdítja a robotot
+
+## Futás és leállítás
+1. ROS2 környezet inicializálása a main függvényben ('''rclpy.init()''')
+2. TurtleController objektum létrehozása és a node futtatáse ('''rclpy.spin()''')
+3. A futás végén a node lezárása ('''controller.destroy_node()'''), majd a ROS2 környezet leállítása('''rclpy.shutdown()''')
+
+## Futtatás
+1. Szimulációs környezet elindítása: '''ros2 launch turtlebot3_gazebo empty_world.launch.py'''
+2. Objektum elhelyezése 
+3. Futtatás a package mappáján belül a következővel: '''ros2 run kotprog controller'''
